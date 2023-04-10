@@ -28,7 +28,7 @@ cap = None
 if not model_type == '模型':
     path_model_file = st.sidebar.text_input(
         f'{model_type} 模型的位置:',
-        f'/root/work/project/{model_type}.pt'
+        f'{model_type}.pt'
     )
     if st.sidebar.checkbox('加载 模型'):
         
