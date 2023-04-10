@@ -2,7 +2,7 @@
 使用带有 Streamlit 的 YOLO 模型（**YOLOv7** 和 **YOLOv8**）显示预测的视频、图像和网络摄像头
 
 ### Sample Streamlit YOLOv7 Dashboard English
-Streamlit Dashboard: https://naseemap47-streamlit-yolov7-app-deploy-bfr4xt.streamlitapp.com/
+Streamlit Dashboard: https://v1eerie-streamlit-yolov8-webui-app-56ujg2.streamlit.app/
 
 ## Docker
 dockerhub: https://hub.docker.com/repository/docker/v1eerie/streamlit-yolo
