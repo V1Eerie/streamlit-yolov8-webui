@@ -1,5 +1,5 @@
 # YOLO Streamlit Dashbord
-Display predicted Video, Images and webcam using YOLO models (**YOLOv7** & **YOLOv8**) with Streamlit
+使用带有 Streamlit 的 YOLO 模型（**YOLOv7** 和 **YOLOv8**）显示预测的视频、图像和网络摄像头
 
 ### Sample Streamlit YOLOv7 Dashboard
 Streamlit Dashboard: https://naseemap47-streamlit-yolov7-app-deploy-bfr4xt.streamlitapp.com/

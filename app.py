@@ -14,23 +14,23 @@ from ultralytics import YOLO
 
 p_time = 0
 
-st.sidebar.title('Settings')
+st.sidebar.title('设置')
 # Choose the model
 model_type = st.sidebar.selectbox(
-    'Choose YOLO Model', ('YOLO Model', 'YOLOv8', 'YOLOv7')
+    '选择 模型 版本', ('模型','YOLOv8', 'YOLOv7')
 )
 
-st.title(f'{model_type} Predictions')
+st.title(f'{model_type} 预测')
 sample_img = cv2.imread('logo.jpg')
 FRAME_WINDOW = st.image(sample_img, channels='BGR')
 cap = None
 
-if not model_type == 'YOLO Model':
+if not model_type == '模型':
     path_model_file = st.sidebar.text_input(
-        f'path to {model_type} Model:',
-        f'eg: dir/{model_type}.pt'
+        f'{model_type} 模型的位置:',
+        f'/root/work/project/{model_type}.pt'
     )
-    if st.sidebar.checkbox('Load Model'):
+    if st.sidebar.checkbox('加载 模型'):
         
         # YOLOv7 Model
         if model_type == 'YOLOv7':
@@ -39,10 +39,10 @@ if not model_type == 'YOLO Model':
                 'PU Options:', ('CPU', 'GPU'))
 
             if not torch.cuda.is_available():
-                st.sidebar.warning('CUDA Not Available, So choose CPU', icon="⚠️")
+                st.sidebar.warning('GPU 暂时不可用, 所以选择 CPU', icon="⚠️")
             else:
                 st.sidebar.success(
-                    'GPU is Available on this Device, Choose GPU for the best performance',
+                    'GPU 可用, 性能更佳',
                     icon="✅"
                 )
             # Model
@@ -60,15 +60,15 @@ if not model_type == 'YOLO Model':
 
         # Inference Mode
         options = st.sidebar.radio(
-            'Options:', ('Webcam', 'Image', 'Video', 'RTSP'), index=1)
+            '选项:', ('摄像头', '图片', '视频', 'RTSP协议实时流媒体'), index=1)
 
         # Confidence
         confidence = st.sidebar.slider(
-            'Detection Confidence', min_value=0.0, max_value=1.0, value=0.25)
+            '预测 置信度', min_value=0.0, max_value=1.0, value=0.25)
 
         # Draw thickness
         draw_thick = st.sidebar.slider(
-            'Draw Thickness:', min_value=1,
+            '拉伸 厚度:', min_value=1,
             max_value=20, value=3
         )
         
@@ -79,11 +79,11 @@ if not model_type == 'YOLO Model':
             color_pick_list.append(color)
 
         # Image
-        if options == 'Image':
+        if options == '图片':
             upload_img_file = st.sidebar.file_uploader(
-                'Upload Image', type=['jpg', 'jpeg', 'png'])
+                '上传 图片', type=['jpg', 'jpeg', 'png'])
             if upload_img_file is not None:
-                pred = st.checkbox(f'Predict Using {model_type}')
+                pred = st.checkbox(f'使用 {model_type} 探测')
                 file_bytes = np.asarray(
                     bytearray(upload_img_file.read()), dtype=np.uint8)
                 img = cv2.imdecode(file_bytes, 1)
@@ -101,16 +101,16 @@ if not model_type == 'YOLO Model':
                     
                     # Updating Inference results
                     with st.container():
-                        st.markdown("<h2>Inference Statistics</h2>", unsafe_allow_html=True)
-                        st.markdown("<h3>Detected objects in curret Frame</h3>", unsafe_allow_html=True)
+                        st.markdown("<h2>预测 统计</h2>", unsafe_allow_html=True)
+                        st.markdown("<h3>当前框架中检测到的物体</h3>", unsafe_allow_html=True)
                         st.dataframe(df_fq, use_container_width=True)
         
         # Video
-        if options == 'Video':
+        if options == '视频':
             upload_video_file = st.sidebar.file_uploader(
-                'Upload Video', type=['mp4', 'avi', 'mkv'])
+                '上传 视频', type=['mp4', 'avi', 'mkv'])
             if upload_video_file is not None:
-                pred = st.checkbox(f'Predict Using {model_type}')
+                pred = st.checkbox(f'使用 {model_type} 探测')
 
                 tfile = tempfile.NamedTemporaryFile(delete=False)
                 tfile.write(upload_video_file.read())
@@ -119,22 +119,22 @@ if not model_type == 'YOLO Model':
 
 
         # Web-cam
-        if options == 'Webcam':
-            cam_options = st.sidebar.selectbox('Webcam Channel',
-                                            ('Select Channel', '0', '1', '2', '3'))
+        if options == '摄像头':
+            cam_options = st.sidebar.selectbox('摄像头 频道',
+                                            ('选择 频道', '0', '1', '2', '3'))
         
-            if not cam_options == 'Select Channel':
-                pred = st.checkbox(f'Predict Using {model_type}')
+            if not cam_options == '选择 频道':
+                pred = st.checkbox(f'使用 {model_type} 探测')
                 cap = cv2.VideoCapture(int(cam_options))
 
 
         # RTSP
-        if options == 'RTSP':
+        if options == 'RTSP协议实时流媒体':
             rtsp_url = st.sidebar.text_input(
-                'RTSP URL:',
+                'RTSP 地址:',
                 'eg: rtsp://admin:name6666@198.162.1.58/cam/realmonitor?channel=0&subtype=0'
             )
-            pred = st.checkbox(f'Predict Using {model_type}')
+            pred = st.checkbox(f'使用 {model_type} 探测')
             cap = cv2.VideoCapture(rtsp_url)
 
 
@@ -146,7 +146,7 @@ if (cap != None) and pred:
         success, img = cap.read()
         if not success:
             st.error(
-                f"{options} NOT working\nCheck {options} properly!!",
+                f"{options} 无法工作\n 请检查设置 !!",
                 icon="🚨"
             )
             break
